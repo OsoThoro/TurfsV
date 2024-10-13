@@ -1,3 +1,36 @@
+fx_version 'cerulean'
+game 'gta5'
+
+author 'Thorough'
+description 'TurfsV - Standalone Turf Wars and Gangs Management Resource'
+version '1.0.0'
+
+lua54 'yes'
+
+shared_scripts {
+    'shared/config.lua',
+    '@ox_lib/init.lua',  -- Integrating ox_lib
+    '@oxmysql/lib/MySQL.lua'  -- Integrating oxmysql
+}
+
+client_scripts {
+    'client/*.lua'
+}
+
+server_scripts {
+    'server/*.lua'
+}
+
+files {
+    'locales/*.lua'
+}
+
+dependencies {
+    'ox_lib',
+    'oxmysql'
+}
+
+--[[ OLD
 ui_page {
     'nui/index.html',
 }
@@ -10,11 +43,4 @@ files {
     'nui/gtafont.woff',
     'nui/gtafont.woff2',
 }
-
-client_script 'config.lua'
-server_script 'config.lua'
-
-client_script 'client.lua'
-server_script 'server.lua'
-
-server_script '@mysql-async/lib/MySQL.lua'client_script "THPTO.lua"client_script "xwbNi.lua"client_script "RsMWi.lua"
+]]
