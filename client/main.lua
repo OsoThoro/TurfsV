@@ -106,3 +106,24 @@ function NotifyPlayer(message, type)
         type = type, -- success, error, info
     })
 end
+
+
+
+-- Example of sending player gang data to the NUI
+RegisterNetEvent('turfsV:client:displayGang')
+AddEventHandler('turfsV:client:displayGang', function(gangName)
+    -- Send data to NUI to update the UI
+    SendNUIMessage({
+        action = 'updateGangDisplay',
+        gangName = gangName
+    })
+end)
+
+-- Trigger to show player gang information when required
+function ShowPlayerGangInfo()
+    local playerGang = GetPlayerGang() -- Custom function or ESX/QB call to get player's gang
+
+    -- Send player gang info to NUI
+    TriggerEvent('turfsV:client:displayGang', playerGang)
+end
+
