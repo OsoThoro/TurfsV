@@ -25,6 +25,14 @@ files {
     'locales/*.lua'
 }
 
+files {
+    'nui/index.html', -- Include NUI files
+    'nui/main.js',
+    'nui/main.css'
+}
+
+ui_page 'nui/index.html' -- Set the NUI page
+
 dependencies {
     'ox_lib',
     'oxmysql'
