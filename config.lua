@@ -1,8 +1,6 @@
 --[[ TurfsV Config File
     Purpose: This file stores all configuration settings for the TurfsV resource.
     Every setting for the resource can be changed here, ensuring modularity and flexibility for future updates.
-    
-    Author: Thorough
 ]]--
 
 Config = {}
@@ -83,7 +81,7 @@ Config.Gangs = {
         Markers = {
             Management = {
                 Location = {x = 250.1908, y = -2018.0785, z = 17.9233},
-                Color = {r = 255, g = 255, b = 0}, -- Yellow marker for Families.
+                Color = {r = 255, g = 255, b = 0}, -- Yellow marker for Vagos.
             },
             VehicleSpawn = {
                 Location = {x = 1398.44, y = 1114.84, z = 113.84},
