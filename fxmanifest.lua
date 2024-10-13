@@ -28,7 +28,10 @@ files {
 files {
     'nui/index.html', -- Include NUI files
     'nui/main.js',
-    'nui/main.css'
+    'nui/main.css',
+    'nui/logo.png',
+    'nui/gtafont.woff',
+    'nui/gtafont.woff2',
 }
 
 ui_page 'nui/index.html' -- Set the NUI page
