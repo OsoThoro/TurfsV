@@ -26,9 +26,6 @@ end
 
 --[[ TurfsV Server
     Purpose: This file handles all server-side logic for the TurfsV resource, including managing turf ownership and sending notifications.
-
-    Author: Thorough
-    Last Updated: [Insert Date]
 ]]--
 
 -- Capture turf logic
@@ -69,4 +66,54 @@ function LogTurfCapture(gang, turf)
     -- Send the message to Discord using a secured webhook
     PerformHttpRequest(Config.DiscordWebhook, function() end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
     print('[TurfsV] ' .. message) -- Log in server console for debugging
+end
+
+
+
+--[[ TurfsV Server
+    Purpose: Handle server-side logic such as vehicle spawns, gang territory management, and database updates.
+    Preserving functionality from the original esx_gangs and adding enhancements with ox_lib and oxmysql.
+]]--
+
+-- Function to spawn a vehicle for the player
+RegisterServerEvent('turfsV:server:spawnVehicle')
+AddEventHandler('turfsV:server:spawnVehicle', function(gangName, vehicleName)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source) -- ESX integration for player identification
+
+    -- Check if player is part of the gang
+    if xPlayer.getJob().name ~= gangName then
+        TriggerClientEvent('ox_lib:notify', _source, { type = 'error', text = 'You are not part of this gang!' })
+        return
+    end
+
+    -- Ensure the vehicle exists in the gang's vehicle list
+    if not Config.Gangs[gangName].Vehicles[vehicleName] then
+        TriggerClientEvent('ox_lib:notify', _source, { type = 'error', text = 'Invalid vehicle!' })
+        return
+    end
+
+    -- Spawn the vehicle using ESX function or native spawn logic
+    local spawnCoords = Config.Gangs[gangName].Markers.VehicleSpawn.Location
+    local model = GetHashKey(vehicleName)
+
+    -- Ensure the model is loaded
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        Wait(100)
+    end
+
+    local vehicle = CreateVehicle(model, spawnCoords.x, spawnCoords.y, spawnCoords.z, 0.0, true, false)
+    SetVehicleNumberPlateText(vehicle, gangName .. tostring(math.random(100, 999)))
+
+    -- Notify the player
+    TriggerClientEvent('ox_lib:notify', _source, { type = 'success', text = 'Vehicle spawned successfully!' })
+end)
+
+-- Add any additional server-side logic from the original script, such as managing territory, rewards, etc.
+
+-- Logging function for debugging and webhook integration
+function LogGangAction(message)
+    PerformHttpRequest(Config.DiscordWebhook, function() end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
+    print('[TurfsV] ' .. message) -- Server-side console log
 end
