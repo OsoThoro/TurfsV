@@ -12,3 +12,10 @@ $(function() {
         }
     });
 });
+
+// Handle NUI message for updating the player's gang display
+window.addEventListener('message', function(event) {
+    if (event.data.action === 'updateGangDisplay') {
+        document.getElementById('gang-name').innerHTML = event.data.gangName;
+    }
+});
